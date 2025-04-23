@@ -97,26 +97,6 @@ Backend API: http://localhost:5000/api
 ![image](https://github.com/user-attachments/assets/0a3ac627-53b9-4f17-b0d1-675d886e9a0b)
 File | Statements | Branches | Functions | Lines
 All files | 80.86% | 50% | 73.68% | 82.51%
-server/server.js | 78.26% | 16.66% | 0% | 78.26%
-server/controllers | 74.79% | 59.37% | 90% | 77.11%
-- auth.controller.js | 80.76% | 50% | 100% | 91.3%
-- comments.controller.js | 78.26% | 75% | 100% | 80.95%
-- tasks.controller.js | 73.68% | 66.66% | 100% | 73.68%
-- teams.controller.js | 69.44% | 50% | 66.66% | 69.44%
-server/middleware | 72% | 37.5% | 66.66% | 75%
-- auth.middleware.js | 72% | 37.5% | 66.66% | 75%
-server/models | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- Comment.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- Task.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- Team.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- User.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-server/routes | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- auth.routes.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- comments.routes.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- tasks.routes.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-- teams.routes.js | 100% ✅ | 100% ✅ | 100% ✅ | 100% ✅
-server/tests | 93.33% | 50% | 100% ✅ | 92.85%
-- db.js | 93.33% | 50% | 100% ✅ | 92.85%
 
 
 
