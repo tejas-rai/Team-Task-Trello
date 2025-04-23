@@ -1,0 +1,50 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    padding: 1rem;
+  }
+  .form {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  .logoWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .logoText {
+    margin-left: 0.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+  .heading {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #374151;
+  }
+  .field {
+    margin-bottom: 1rem;
+  }
+  .label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+  }
+  .error {
+    margin-top: 0.25rem;
+    color: #b91c1c;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  

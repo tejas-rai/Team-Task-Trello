@@ -1,0 +1,40 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0.75rem 1.5rem;
+  }
+  .links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .link {
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .link:hover {
+    color: #2563eb;
+  }
+  .logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  .logout {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .logout:hover {
+    color: #b91c1c;
+  }
+  

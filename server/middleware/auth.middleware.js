@@ -5,20 +5,16 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // 1️. Verify JWT and attach user to req.user
 exports.isAuthenticated = async (req, res, next) => {
-  console.log(">>>> RAW authorization header:", JSON.stringify(req.header("authorization")));
 
   const authHeader = req.header("Authorization");
   if (!authHeader?.startsWith("Bearer "))
     return res.status(401).json({ message: "No token, authorization denied" });
 
   const token = authHeader.split(" ")[1];
-  // console.log("TOKEN --------------->", token)
   try {
-    console.log("I am in try block", JWT_SECRET)
-    console.log("→ LOADED .env JWT_SECRET:", process.env.JWT_SECRET);
+    
 
     const decoded = jwt.verify(token, JWT_SECRET);
-    console.log("decoded------------->", decoded);
     // fetch user (optional: to get fresh role/name)
     const user = await User.findById(decoded.id).select("-password");
     if (!user) return res.status(401).json({ message: "Invalid token" });
