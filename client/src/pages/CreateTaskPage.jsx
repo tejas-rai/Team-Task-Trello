@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTeams } from "../features/teams/teamsSlice";
 import { createTask } from "../features/tasks/tasksSlice";
 import { useNavigate } from "react-router-dom";
+import Card from "../components/Card";
+import Button from "../components/Button";
+import { Input, Select } from "../components/FormControls";
 
 export default function CreateTaskPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { teams, status: teamsStatus } = useSelector((s) => s.teams);
 
-  // Load teams if we haven’t yet
   useEffect(() => {
     if (teamsStatus === "idle") {
       dispatch(fetchTeams());
@@ -33,41 +35,42 @@ export default function CreateTaskPage() {
     },
   });
 
-  // Watch the selected team to update members dropdown
   const selectedTeamId = watch("team");
   const selectedTeam = teams.find((t) => t._id === selectedTeamId);
   const memberOptions = selectedTeam?.members || [];
 
   const onSubmit = async (data) => {
     try {
-      // dispatch createTask
-      await dispatch(createTask({
-        title: data.title,
-        description: data.description,
-        dueDate: data.dueDate,
-        priority: data.priority,
-        team: data.team,
-        assignedTo: data.assignedTo,
-      })).unwrap();
+      await dispatch(
+        createTask({
+          title: data.title,
+          description: data.description,
+          dueDate: data.dueDate,
+          priority: data.priority,
+          team: data.team,
+          assignedTo: data.assignedTo,
+        })
+      ).unwrap();
       navigate("/tasks");
     } catch {
-      // error is in tasks.error
+      // error handled via tasks.error
     }
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto bg-white rounded-2xl shadow-lg mt-10">
-      <h2 className="text-2xl font-semibold mb-6">Create New Task</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <Card className="max-w-xl mx-auto mt-10 p-6 space-y-6">
+      <h2 className="text-2xl font-semibold">Create New Task</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Title */}
         <div>
           <label className="block mb-1 font-medium">Title</label>
-          <input
+          <Input
             {...register("title", { required: "Title is required" })}
-            className="w-full border rounded px-3 py-2"
           />
           {errors.title && (
-            <p className="text-red-600 text-sm mt-1">{errors.title.message}</p>
+            <p className="text-red-600 text-sm mt-1">
+              {errors.title.message}
+            </p>
           )}
         </div>
 
@@ -76,7 +79,7 @@ export default function CreateTaskPage() {
           <label className="block mb-1 font-medium">Description</label>
           <textarea
             {...register("description")}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             rows={3}
           />
         </div>
@@ -84,71 +87,67 @@ export default function CreateTaskPage() {
         {/* Due Date */}
         <div>
           <label className="block mb-1 font-medium">Due Date</label>
-          <input
+          <Input
             type="date"
             {...register("dueDate", { required: "Due date is required" })}
-            className="w-full border rounded px-3 py-2"
           />
           {errors.dueDate && (
-            <p className="text-red-600 text-sm mt-1">{errors.dueDate.message}</p>
+            <p className="text-red-600 text-sm mt-1">
+              {errors.dueDate.message}
+            </p>
           )}
         </div>
 
         {/* Priority */}
         <div>
           <label className="block mb-1 font-medium">Priority</label>
-          <select
-            {...register("priority")}
-            className="w-full border rounded px-3 py-2"
-          >
+          <Select {...register("priority")}>
             {["Low", "Medium", "High"].map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option key={p} value={p}>
+                {p}
+              </option>
             ))}
-          </select>
+          </Select>
         </div>
 
         {/* Team */}
         <div>
           <label className="block mb-1 font-medium">Team</label>
-          <select
-            {...register("team", { required: true })}
-            className="w-full border rounded px-3 py-2"
-          >
+          <Select {...register("team", { required: true })}>
             {teams.map((t) => (
-              <option key={t._id} value={t._id}>{t.name}</option>
+              <option key={t._id} value={t._id}>
+                {t.name}
+              </option>
             ))}
-          </select>
+          </Select>
         </div>
 
         {/* Assigned To */}
         <div>
           <label className="block mb-1 font-medium">Assign To</label>
-          <select
+          <Select
             {...register("assignedTo", { required: "Select a member" })}
-            className="w-full border rounded px-3 py-2"
             disabled={!memberOptions.length}
           >
-            <option value="">-- select member --</option>
+            <option value="">Select member…</option>
             {memberOptions.map((m) => (
               <option key={m._id} value={m._id}>
                 {m.name} ({m.email})
               </option>
             ))}
-          </select>
+          </Select>
           {errors.assignedTo && (
-            <p className="text-red-600 text-sm mt-1">{errors.assignedTo.message}</p>
+            <p className="text-red-600 text-sm mt-1">
+              {errors.assignedTo.message}
+            </p>
           )}
         </div>
 
         {/* Submit */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 disabled:opacity-50"
-        >
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? "Creating…" : "Create Task"}
-        </button>
+        </Button>
       </form>
-    </div>
+    </Card>
   );
 }

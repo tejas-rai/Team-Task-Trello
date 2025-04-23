@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTeams, addUserToTeam } from "../features/teams/teamsSlice";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Card from "../components/Card";
+import Button from "../components/Button";
+import { Input, Select } from "../components/FormControls";
 
 export default function TeamsPage() {
   const dispatch = useDispatch();
@@ -21,54 +24,37 @@ export default function TeamsPage() {
     dispatch(addUserToTeam({ teamId, userId })).unwrap().then(() => reset());
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-semibold">Teams</h1>
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-semibold">Teams</h1>
         {user.role === "admin" && (
-          <button
-            onClick={() => navigate("/teams/create")}
-            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-          >
-            New Team
-          </button>
+          <Button onClick={() => navigate("/teams/create")}>New Team</Button>
         )}
       </div>
-
-      {status === "loading" && <p>Loading teams…</p>}
-      {status === "failed" && <p className="text-red-600">{error}</p>}
-
+  
       {teams.map((team) => (
-        <div key={team._id} className="mb-6 p-4 border rounded-lg">
+        <Card key={team._id}>
           <h2 className="text-xl font-medium">{team.name}</h2>
-          <ul className="list-disc ml-6 mt-2">
+          <ul className="list-disc ml-6 mt-2 space-y-1">
             {team.members.map((m) => (
-              <li key={m._id}>
-                {m.name} ({m.email})
-              </li>
+              <li key={m._id}>{m.name} ({m.email})</li>
             ))}
           </ul>
-
+  
           {user.role === "admin" && (
-            <form
-              onSubmit={handleSubmit((vals) =>
-                onAdd({ ...vals, teamId: team._id })
-              )}
-              className="mt-3 flex space-x-2"
-            >
-              <input
-                {...register("userId", { required: true })}
-                placeholder="User ID to add"
-                className="flex-1 border rounded px-2 py-1"
-              />
-              <button
-                type="submit"
-                className="bg-blue-600 text-white px-3 py-1 rounded"
-              >
-                Add
-              </button>
+            <form onSubmit={handleSubmit(onAdd)} className="mt-4 flex space-x-2">
+              <Select {...register("userId", { required: true })}>
+                <option value="">Select user…</option>
+                {users.map((u) => (
+                  <option key={u._id} value={u._id}>
+                    {u.name}
+                  </option>
+                ))}
+              </Select>
+              <Button type="submit">Add</Button>
             </form>
           )}
-        </div>
+        </Card>
       ))}
     </div>
   );
