@@ -4,6 +4,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // 1️. Verify JWT and attach user to req.user
 exports.isAuthenticated = async (req, res, next) => {
+  console.log(">>>> RAW authorization header:", JSON.stringify(req.header("authorization")));
+
   const authHeader = req.header("Authorization");
   if (!authHeader?.startsWith("Bearer "))
     return res.status(401).json({ message: "No token, authorization denied" });

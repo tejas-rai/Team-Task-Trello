@@ -1,9 +1,10 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const teamRoutes = require("./routes/teams.routes");
 const taskRoutes = require("./routes/tasks.routes");
+const commentRoutes = require("./routes/comments.routes");
 
 
 
@@ -19,6 +20,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/comments", commentRoutes);
+
 
 // MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)
