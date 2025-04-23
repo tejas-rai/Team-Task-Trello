@@ -1,5 +1,6 @@
 const Team = require("../models/Team");
 const User = require("../models/User");
+const mongoose = require("mongoose");
 
 // Create a new team (Admin only)
 exports.createTeam = async (req, res) => {
@@ -37,7 +38,9 @@ exports.addUserToTeam = async (req, res) => {
   try {
     const { teamId } = req.params;
     const { userId } = req.body;
-
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ message: "Invalid user ID format" });
+      }
     // Verify team exists
     const team = await Team.findById(teamId);
     if (!team) {
